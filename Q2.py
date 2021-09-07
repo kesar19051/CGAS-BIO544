@@ -11,7 +11,8 @@ data = json.load(f)
 # Q2
 # Printing the number of recipes
 print("The number of recipes:")
-print(len(data))
+numOfRecipes = len(data)
+print(numOfRecipes)
 
 uniqueIngredients = []
 uniqueCuisines = []
@@ -25,10 +26,11 @@ for i in range(len(data)):
     # Finding the number of cuisines and storing number of recipes for each cuisine
     if cuisine in uniqueCuisines:
         cuisine_recipes[cuisine] = cuisine_recipes[cuisine]+1
+
     else:
         uniqueCuisines.append(cuisine)
         cuisine_recipes[cuisine] = 1
-
+        
     # Finding the number of ingredients
     for j in range(len(list_ingredients)):
         element = list_ingredients[j]
@@ -65,3 +67,29 @@ plt.ylabel("No. of recipes")
 plt.title("Recipes for each cuisine")
 plt.show()
 
+# Extracting recipe size and number of cuisines for each cuisine
+# to distinguish every cuisine
+Legend = []
+i = 0
+for cuisine in uniqueCuisines:
+    recipeSize_numberOfCuisies = {}
+    Legend.append(cuisine)
+    numOfRecipesInCuisine = 0.0
+    for recipe in data:
+        if cuisine==recipe['cuisine']:
+            recipe_size = len(recipe['ingredients'])
+            numOfRecipesInCuisine = numOfRecipesInCuisine+1
+            if recipe_size in recipeSize_numberOfCuisies:
+                recipeSize_numberOfCuisies[recipe_size] = recipeSize_numberOfCuisies[recipe_size]+1
+            else:
+                recipeSize_numberOfCuisies[recipe_size] = 1
+    for recipe_size in recipeSize_numberOfCuisies:
+        recipeSize_numberOfCuisies[recipe_size] = recipeSize_numberOfCuisies[recipe_size]/numOfRecipesInCuisine
+    x_axis = list(recipeSize_numberOfCuisies.keys())
+    y_axis = list(recipeSize_numberOfCuisies.values())
+    plt.scatter(x_axis, y_axis)
+
+plt.xlabel("Recipe size")
+plt.ylabel("Percentage")
+plt.legend(Legend)
+plt.show()
