@@ -71,20 +71,37 @@ plt.show()
 # to distinguish every cuisine
 Legend = []
 i = 0
+
+# stores the number of recipes corresponding to each recipe
+recipeSize_recipes = {}
 for cuisine in uniqueCuisines:
+
+    # Stores the number of recipes corresponding to each recipe and cuisine
     recipeSize_numberOfCuisies = {}
     Legend.append(cuisine)
+
+    # to calculate percentage of recipe size
     numOfRecipesInCuisine = 0.0
     for recipe in data:
+        recipe_size = len(recipe['ingredients'])
+
+        if recipe_size in recipeSize_recipes:
+            recipeSize_recipes[recipe_size] = recipeSize_recipes[recipe_size]+1
+        else:
+            recipeSize_recipes[recipe_size] = 1
+
         if cuisine==recipe['cuisine']:
-            recipe_size = len(recipe['ingredients'])
             numOfRecipesInCuisine = numOfRecipesInCuisine+1
             if recipe_size in recipeSize_numberOfCuisies:
                 recipeSize_numberOfCuisies[recipe_size] = recipeSize_numberOfCuisies[recipe_size]+1
             else:
                 recipeSize_numberOfCuisies[recipe_size] = 1
+
+    # Calculating the recipe size percentage for each cuisine
     for recipe_size in recipeSize_numberOfCuisies:
         recipeSize_numberOfCuisies[recipe_size] = recipeSize_numberOfCuisies[recipe_size]/numOfRecipesInCuisine
+
+    # Plotting every cuisine
     x_axis = list(recipeSize_numberOfCuisies.keys())
     y_axis = list(recipeSize_numberOfCuisies.values())
     plt.scatter(x_axis, y_axis)
