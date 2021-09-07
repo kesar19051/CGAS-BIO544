@@ -18,9 +18,19 @@ uniqueIngredients = []
 uniqueCuisines = []
 cuisine_recipes = {}
 
+# stores the number of recipes corresponding to each recipe size
+recipeSize_recipes = {}
+
 for i in range(len(data)):
     dict = data[i]
     list_ingredients = dict['ingredients']
+
+    recipe_size = len(list_ingredients)
+    if recipe_size in recipeSize_recipes:
+        recipeSize_recipes[recipe_size] = recipeSize_recipes[recipe_size]+1
+    else:
+        recipeSize_recipes[recipe_size] = 1
+
     cuisine = dict['cuisine']
 
     # Finding the number of cuisines and storing number of recipes for each cuisine
@@ -72,8 +82,6 @@ plt.show()
 Legend = []
 i = 0
 
-# stores the number of recipes corresponding to each recipe
-recipeSize_recipes = {}
 for cuisine in uniqueCuisines:
 
     # Stores the number of recipes corresponding to each recipe and cuisine
@@ -84,11 +92,6 @@ for cuisine in uniqueCuisines:
     numOfRecipesInCuisine = 0.0
     for recipe in data:
         recipe_size = len(recipe['ingredients'])
-
-        if recipe_size in recipeSize_recipes:
-            recipeSize_recipes[recipe_size] = recipeSize_recipes[recipe_size]+1
-        else:
-            recipeSize_recipes[recipe_size] = 1
 
         if cuisine==recipe['cuisine']:
             numOfRecipesInCuisine = numOfRecipesInCuisine+1
