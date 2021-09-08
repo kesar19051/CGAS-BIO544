@@ -113,3 +113,27 @@ plt.xlabel("Recipe size")
 plt.ylabel("Percentage")
 plt.legend(Legend)
 plt.show()
+
+# Computing the percentage of each recipe size
+for recipe_size in recipeSize_recipes:
+    recipeSize_recipes[recipe_size] = recipeSize_recipes[recipe_size]/float(len(data))
+
+# Plotting the graph
+x_axis = list(recipeSize_recipes.keys())
+y_axis = list(recipeSize_recipes.values())
+plt.scatter(x_axis, y_axis)
+plt.xlabel("Recipe size")
+plt.ylabel("Percentage")
+plt.show()
+
+# Plotting CDF
+cdfData = x_axis
+count, bins_count = np.histogram(cdfData, bins = 10)
+pdf = count/sum(count)
+cdf = np.cumsum(pdf)
+plt.plot(bins_count[1:], pdf, color="red", label="PDF")
+plt.plot(bins_count[1:], cdf, color="blue", label="CDF")
+# plt.plot(bins_count[1:], len(cdfData)-cdf, c='green')
+# plt.plot(bins_count[1:], len(cdfData)-cdf, color="green", label="CDF>=1")
+plt.legend()
+plt.show()
