@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import json
+import operator
 
 f = open('train.json')
 
@@ -17,6 +18,7 @@ print(numOfRecipes)
 uniqueIngredients = []
 uniqueCuisines = []
 cuisine_recipes = {}
+ingredient_frequency = {}
 
 # stores the number of recipes corresponding to each recipe size
 recipeSize_recipes = {}
@@ -24,6 +26,13 @@ recipeSize_recipes = {}
 for i in range(len(data)):
     dict = data[i]
     list_ingredients = dict['ingredients']
+
+    # Finding out the frequency of each ingredient
+    for ingredient in list_ingredients:
+        if ingredient in ingredient_frequency:
+            ingredient_frequency[ingredient] = ingredient_frequency[ingredient]+1
+        else:
+            ingredient_frequency[ingredient] = 1
 
     recipe_size = len(list_ingredients)
     if recipe_size in recipeSize_recipes:
@@ -133,7 +142,37 @@ pdf = count/sum(count)
 cdf = np.cumsum(pdf)
 plt.plot(bins_count[1:], pdf, color="red", label="PDF")
 plt.plot(bins_count[1:], cdf, color="blue", label="CDF")
-# plt.plot(bins_count[1:], len(cdfData)-cdf, c='green')
-# plt.plot(bins_count[1:], len(cdfData)-cdf, color="green", label="CDF>=1")
 plt.legend()
 plt.show()
+
+# Q3 a
+sorted_matrix = sorted(ingredient_frequency.items(),key=operator.itemgetter(1),reverse=True)
+sorted_dict = {}
+topTenIngredients = []
+j = 0
+
+for i in range(len(sorted_matrix)):
+    sorted_dict[i] = sorted_matrix[i][1]
+    if(j<10):
+        topTenIngredients.append(sorted_matrix[i][0])
+    j = j+1
+
+# print(sorted_dict)
+x_axis = list(sorted_dict.keys())
+y_axis = list(sorted_dict.values())
+
+# Dot plot
+plt.scatter(x_axis,y_axis)
+plt.xlabel("Rank")
+plt.ylabel("Frequency")
+plt.show()
+
+# Line plot
+plt.plot(x_axis,y_axis)
+plt.xlabel("Rank")
+plt.ylabel("Frequency")
+plt.show()
+
+print("The 10 most popular ingredients in the recipes are: ")
+for ingredient in topTenIngredients:
+    print(ingredient)
