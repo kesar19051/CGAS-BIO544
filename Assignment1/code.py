@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 import operator
+import seaborn as sns
 
 f = open('train.json')
 
@@ -223,3 +224,5 @@ plt.ylabel("Frequency")
 plt.legend(Legend, bbox_to_anchor = (1.05, 0.6))
 plt.title("Ingredient Rank Distribution for each cuisine")
 plt.show()
+
+ax = sns.heatmap( data_set , linewidth = 0.5 , cmap = 'coolwarm' )
