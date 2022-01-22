@@ -11,7 +11,7 @@ Computational Gastronomy is an elementary course to the science of the food.
 This is an exploratory course and the above assignments serve as a foundational stone for Computational Gastronomy.
 
 # Dataset
-The dataset used for all the assignment is the same. It is a json file of nested dictionaries. Each dictionary within the outer dictionary corresponds to a recipe. It has following keys:
+The dataset used for all the assignment is the same. It is a json file of nested dictionaries. Each dictionary within the outer dictionary corresponds to a recipe. It has the  following keys:
 - id: the unique identity of a recipe
 - cuisine: the cuisine which the recipe belongs to
 - ingredients: it is a list of the ingredients used in the recipe
